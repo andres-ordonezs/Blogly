@@ -17,3 +17,15 @@ connect_db(app)
 
 app.config['SECRET_KEY'] = "SECRET!"
 debug = DebugToolbarExtension(app)
+
+
+@app.get('/')
+def redirect_users():
+    """ #TODO: """
+
+    return redirect('/users')
+
+
+@app.get('/users')
+def show_users():
+    """ #TODO: """
