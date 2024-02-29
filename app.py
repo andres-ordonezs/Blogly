@@ -29,3 +29,33 @@ def redirect_users():
 @app.get('/users')
 def show_users():
     """ #TODO: """
+
+    return render_template(
+        'user_listing.html',
+        users=User.query.all()
+    )
+
+
+@app.get('/users/new')
+def show_add_form():
+    """  """
+    return render_template('user_form.html')
+
+
+@app.post('/users/new')
+def add_new_user():
+    """  """
+    first_name = request.form['first_name']
+    last_name = request.form['last_name']
+    input_url = request.form['image_url']
+    image_url = input_url if input_url else '<ion-icon name="person-outline"></ion-icon>'
+
+    user = User(first_name=first_name,
+                last_name=last_name,
+                image_url=image_url
+                )
+
+    db.session.add(user)
+    db.session.commit()
+
+    return redirect('/users')
