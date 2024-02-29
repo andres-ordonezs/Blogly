@@ -31,9 +31,11 @@ def show_users():
     """ Show all users. From here, option to view specific users details or
     navigate to new user form. """
 
+    users = User.query.all().order_by('first_name')
+
     return render_template(
         'user_listing.html',
-        users=User.query.all()
+        users=users
     )
 
 
@@ -41,15 +43,17 @@ def show_users():
 def show_add_form():
     """ Display an add form for new users, with inputs for first name, last name and image URL.
     Upon submission, post data and redirect to user list.   """
+
     return render_template('user_form.html')
 
 
 @app.post('/users/new')
 def add_new_user():
     """ Process the add form, adding a new user before redirecting back to user list """
+
     first_name = request.form['first_name']
     last_name = request.form['last_name']
-    image_url = request.form['image_url']
+    image_url = request.form['image_url'] or None
 
     user = User(first_name=first_name,
                 last_name=last_name,

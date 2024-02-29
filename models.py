@@ -2,7 +2,8 @@
 from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
-profile_pic_icon = "https://images.rawpixel.com/image_png_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIzLTAxL3JtNjA5LXNvbGlkaWNvbi13LTAwMi1wLnBuZw.png"
+DEFAULT_PROFILE_PICTURE = "https://images.rawpixel.com/image_png_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIzLTAxL3JtNjA5LXNvbGlkaWNvbi13LTAwMi1wLnBuZw.png"
+
 
 def connect_db(app):
     """Connect to database."""
@@ -22,16 +23,13 @@ class User(db.Model):
 
     first_name = db.Column(
         db.String(50),
-        nullable=False,
-        unique=False)
+        nullable=False)
 
     last_name = db.Column(
         db.String(50),
-        nullable=False,
-        unique=False)
+        nullable=False)
 
     image_url = db.Column(
         db.Text,
         nullable=True,
-        unique=False,
-        default= profile_pic_icon)
+        default=DEFAULT_PROFILE_PICTURE)
