@@ -13,22 +13,23 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = True
 
-connect_db(app)
-
 app.config['SECRET_KEY'] = "SECRET!"
-debug = DebugToolbarExtension(app)
+# debug = DebugToolbarExtension(app)
+
+connect_db(app)
 
 
 @app.get('/')
 def redirect_users():
-    """ #TODO: """
+    """ Redirect to list of all users. """
 
     return redirect('/users')
 
 
 @app.get('/users')
 def show_users():
-    """ #TODO: """
+    """ Show all users. From here, option to view specific users details or
+    navigate to new user form. """
 
     return render_template(
         'user_listing.html',
@@ -38,18 +39,17 @@ def show_users():
 
 @app.get('/users/new')
 def show_add_form():
-    """  """
+    """ Display an add form for new users, with inputs for first name, last name and image URL.
+    Upon submission, post data and redirect to user list.   """
     return render_template('user_form.html')
 
 
 @app.post('/users/new')
 def add_new_user():
-    """  """
+    """ Process the add form, adding a new user before redirecting back to user list """
     first_name = request.form['first_name']
     last_name = request.form['last_name']
-    input_url = request.form['image_url']
-    # TODO: Change default URL
-    image_url = input_url if input_url else '<ion-icon name="person-outline"></ion-icon>'
+    image_url = request.form['image_url']
 
     user = User(first_name=first_name,
                 last_name=last_name,
@@ -64,7 +64,8 @@ def add_new_user():
 
 @app.get('/users/<int:user_id>')
 def show_user_details(user_id):
-    """ """
+    """ Show information about the given user. Takes User's id as URL parameter.
+    Includes options to get to their edit page and to delete the user. """
 
     user = User.query.get_or_404(user_id)
 
@@ -73,6 +74,9 @@ def show_user_details(user_id):
 
 @app.get('/users/<int:user_id>/edit')
 def show_edit_page(user_id):
+    """ Show the edit page for a user. Takes User's id as URL parameter.
+    Displays form with first name, last name and image URL pre-populated with current user data.
+    User can cancel to return to the user details page or save to update user data. """
 
     user = User.query.get_or_404(user_id)
 
@@ -81,6 +85,8 @@ def show_edit_page(user_id):
 
 @app.post('/users/<int:user_id>/edit')
 def edit_user(user_id):
+    """ Process the edit form, returning the user to the /users page.
+     Takes User's id as URL parameter. """
     first_name = request.form['first_name']
     last_name = request.form['last_name']
     image_url = request.form['image_url']
@@ -98,6 +104,7 @@ def edit_user(user_id):
 
 @app.post('/users/<int:user_id>/delete')
 def delete_user(user_id):
+    """ Delete the user. Takes User's id as URL parameter. """
 
     user = User.query.get_or_404(user_id)
 

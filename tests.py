@@ -5,7 +5,7 @@ os.environ["DATABASE_URL"] = "postgresql:///blogly_test"
 from unittest import TestCase
 
 from app import app, db
-from models import DEFAULT_IMAGE_URL, User
+from models import profile_pic_icon, User
 
 # Make Flask errors be real errors, rather than HTML pages with error info
 app.config['TESTING'] = True
@@ -55,9 +55,46 @@ class UserViewTestCase(TestCase):
         db.session.rollback()
 
     def test_list_users(self):
+        """ test that user list populates correctly """
+
         with app.test_client() as c:
             resp = c.get("/users")
             self.assertEqual(resp.status_code, 200)
             html = resp.get_data(as_text=True)
             self.assertIn("test1_first", html)
             self.assertIn("test1_last", html)
+
+
+    # def test_new_user_form(self): #get
+    #     """ test that new user form populates with empty inputs """
+
+    #     with app.test_client() as c:
+    #     resp = c.get("/users/new")
+    #     self.assertEqual(resp.status_code, 200)
+    #     html = resp.get_data(as_text=True)
+    #     self.assertIn("Create a User", html)
+
+
+    # def test_user_details(self): #get
+    #     """ test to ensure user details are populated when a username is clicked on """
+
+    #     with app.test_client() as c:
+    #     resp = c.get("/users/new")
+    #     self.assertEqual(resp.status_code, 200)
+    #     html = resp.get_data(as_text=True)
+    #     self.assertIn("Create a User", html)
+
+
+
+    # def test_user_edit_form(self): #get
+    #     """ test that edit user form populates with inputs autopopulating
+    #     the user's existing information """
+
+    #     with app.test_client() as c:
+
+
+
+    # def test_delete_user(self): #post
+    #     """ test that delete user works properly by deleting a user from the database """
+
+    #     with app.test_client() as c:
