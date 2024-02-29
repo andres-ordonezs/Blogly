@@ -2,4 +2,19 @@
 
 {% block title %} {% endblock %}
 
-{% block content %} {% endblock %}
+{% block content %}
+
+<div class="container">
+  <img src="{{ user.image_url }}" alt="profile picture">
+</div>
+
+<div class="container">
+  <h1>{{ user.first_name }} {{ user.last_name }}</h1>
+
+  <form>
+    <button formaction="/users/{{ user.id }}/edit" formmethod="GET" class="btn btn-primary">Edit</button>
+    <button formaction="/users/{{ user.id }}/delete" formmethod="POST" class="btn btn-danger">Delete</button>
+  </form>
+</div>
+
+{% endblock %}

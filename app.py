@@ -59,3 +59,26 @@ def add_new_user():
     db.session.commit()
 
     return redirect('/users')
+
+
+@app.get('/users/<int:user_id>')
+def show_user_details(user_id):
+    """ """
+
+    user = User.query.get_or_404(user_id)
+
+    return render_template("user_detail.html", user=user)
+
+
+@app.get('/users/<int:user_id>/edit')
+def show_edit_page(user_id):
+
+    user = User.query.get_or_404(user_id)
+
+    return render_template('user_edit.html', user=user)
+
+
+# @app.post('/users/<int:user_id>/edit')
+
+
+# @app.post('/users/<int:user_id>/delete')
