@@ -1,0 +1,24 @@
+body {
+  padding: 15px;
+}
+
+.user-info-container {
+  display: flex;
+  flex-direction: row;
+  width: 200px;
+  padding: 10px;
+  width: 300px;
+}
+
+.user-image {
+  width: 100px;
+  height: 100px;
+  margin: 0 5px;
+  border-radius: 10px;
+  background-size: 100%;
+}
+
+.user-info {
+  margin: 0 10px;
+  width: 70%;
+}

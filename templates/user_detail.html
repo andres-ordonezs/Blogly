@@ -5,21 +5,18 @@
 {% block content %}
 
 <div class="user-info-container">
-  <div class="user-image">
-    <!-- <div class="user-image" background-image="{{user.image_url}}" alt="profile
-    picture"> -->
+
+  <div class="user-image" style="background-image: url({{user.image_url}})">
   </div>
-</div>
 
-<div class="user-info">
-  <h1>{{ user.first_name }} {{ user.last_name }}</h1>
+  <div class="user-info">
+    <h1>{{ user.first_name }} {{ user.last_name }}</h1>
 
-  <form>
-    <button formaction="/users/{{ user.id }}/edit" formmethod="GET" class="btn btn-primary">Edit</button>
-    <button formaction="/users/{{ user.id }}/delete" formmethod="POST" class="btn btn-danger">Delete</button>
-  </form>
-</div>
-
+    <form>
+      <button formaction="/users/{{ user.id }}/edit" formmethod="GET" class="btn btn-primary">Edit</button>
+      <button formaction="/users/{{ user.id }}/delete" formmethod="POST" class="btn btn-danger">Delete</button>
+    </form>
+  </div>
 </div>
 
 {% endblock %}
