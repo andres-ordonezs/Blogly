@@ -48,12 +48,12 @@ class Post(db.Model):
 
     title = db.Column(
         db.String(50),
-        nullable = False
+        nullable=False
     )
 
     content = db.Column(
         db.Text,
-        nullable = False
+        nullable=False
     )
 
     created_at = db.Column(

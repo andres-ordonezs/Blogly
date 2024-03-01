@@ -6,16 +6,17 @@
 
 <div class="user-info-container">
   <div class="user-image" style="background-image: url({{user.image_url}})">
-  </div>
+</div>
 
-  <div class="user-info">
-    <h1>{{ user.first_name }} {{ user.last_name }}</h1>
+<div class="user-info">
 
-    <form>
-      <button formaction="/users/{{ user.id }}/edit" formmethod="GET" class="btn btn-primary">Edit</button>
-      <button formaction="/users/{{ user.id }}/delete" formmethod="POST" class="btn btn-danger">Delete</button>
-    </form>
-  </div>
+  <h1>{{ user.first_name }} {{ user.last_name }}</h1>
+
+  <form>
+    <button formaction="/users/{{ user.id }}/edit" formmethod="GET" class="btn btn-primary">Edit</button>
+    <button formaction="/users/{{ user.id }}/delete" formmethod="POST" class="btn btn-danger">Delete</button>
+  </form>
+
   <div class="user-posts">
     <h2>Posts</h2>
     <ul>
@@ -28,10 +29,9 @@
     <a href="/users/{{ user.id }}/posts/new" class="btn btn-primary">
       Add Post
     </a>
-
-
   </div>
 
 </div>
+
 
 {% endblock %}

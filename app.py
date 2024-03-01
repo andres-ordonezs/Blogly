@@ -114,6 +114,11 @@ def delete_user(user_id):
     """ Delete the user. Takes User's id as URL parameter. """
 
     user = User.query.get_or_404(user_id)
+    posts = user.posts
+
+    if posts:
+        for post in posts:
+            db.session.delete(post)
 
     db.session.delete(user)
 
@@ -126,7 +131,7 @@ def delete_user(user_id):
 
 @app.get('/users/<int:user_id>/posts/new')
 def show_new_post_form(user_id):
-    """ """
+    """ Show empty post form with inputs for post title and content """
 
     user = User.query.get_or_404(user_id)
 
@@ -135,7 +140,7 @@ def show_new_post_form(user_id):
 
 @app.post('/users/<int:user_id>/posts/new')
 def handle_add_post(user_id):
-    """ """
+    """ adds post and redirects to user details page """
 
     title = request.form['title']
     content = request.form['content']
@@ -170,3 +175,35 @@ def show_post_edit_form(post_id):
     post = Post.query.get_or_404(post_id)
 
     return render_template('post_edit.html', post=post)
+
+
+@app.post('/posts/<int:post_id>/edit')
+def edit_post(post_id):
+    """ """
+
+    title = request.form['title']
+    content = request.form['content']
+
+    post = Post.query.get_or_404(post_id)
+
+    post.title = title
+    post.content = content
+
+    db.session.commit()
+
+    return redirect(f'/posts/{post_id}')
+
+
+@app.post('/posts/<int:post_id>/delete')
+def delete_post(post_id):
+    """  """
+
+    post = Post.query.get_or_404(post_id)
+
+    user_id = post.user_id
+
+    db.session.delete(post)
+
+    db.session.commit()
+
+    return redirect(f'/users/{user_id}')
