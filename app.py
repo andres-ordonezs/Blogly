@@ -20,6 +20,7 @@ connect_db(app)
 
 # USER ROUTES
 
+
 @app.get('/')
 def redirect_users():
     """ Redirect to list of all users. """
@@ -121,7 +122,6 @@ def delete_user(user_id):
     return redirect('/users')
 
 
-
 # POST ROUTES
 
 @app.get('/users/<int:user_id>/posts/new')
@@ -131,6 +131,7 @@ def show_new_post_form(user_id):
     user = User.query.get_or_404(user_id)
 
     return render_template('new_post_form.html', user=user)
+
 
 @app.post('/users/<int:user_id>/posts/new')
 def handle_add_post(user_id):
@@ -151,3 +152,21 @@ def handle_add_post(user_id):
     db.session.commit()
 
     return redirect(f'/users/{user_id}')
+
+
+@app.get('/posts/<int:post_id>')
+def show_post(post_id):
+    """  """
+
+    post = Post.query.get_or_404(post_id)
+
+    return render_template('post.html', post=post)
+
+
+@app.get('/posts/<int:post_id>/edit')
+def show_post_edit_form(post_id):
+    """  """
+
+    post = Post.query.get_or_404(post_id)
+
+    return render_template('post_edit.html', post=post)
