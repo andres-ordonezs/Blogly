@@ -66,7 +66,7 @@ class UserViewTestCase(TestCase):
 
     def test_new_user_form(self):  # get
         """ test that new user form is displayed """
-# TODO: Chnage docstring to reflect actual redirection to form
+
         with app.test_client() as c:
             resp = c.get("/users/new")
             self.assertEqual(resp.status_code, 200)

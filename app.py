@@ -5,7 +5,7 @@ import os
 from flask import Flask, request, redirect, render_template
 from flask_debugtoolbar import DebugToolbarExtension
 
-from models import db, connect_db, User
+from models import db, connect_db, User, Post
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(
@@ -18,6 +18,7 @@ app.config['SECRET_KEY'] = "SECRET!"
 
 connect_db(app)
 
+# USER ROUTES
 
 @app.get('/')
 def redirect_users():
@@ -31,7 +32,7 @@ def show_users():
     """ Show all users. From here, option to view specific users details or
     navigate to new user form. """
 
-    users = User.query.all().order_by('first_name')
+    users = User.query.order_by('first_name').all()
 
     return render_template(
         'user_listing.html',
@@ -91,6 +92,7 @@ def show_edit_page(user_id):
 def edit_user(user_id):
     """ Process the edit form, returning the user to the /users page.
      Takes User's id as URL parameter. """
+
     first_name = request.form['first_name']
     last_name = request.form['last_name']
     image_url = request.form['image_url']
@@ -117,3 +119,35 @@ def delete_user(user_id):
     db.session.commit()
 
     return redirect('/users')
+
+
+
+# POST ROUTES
+
+@app.get('/users/<int:user_id>/posts/new')
+def show_new_post_form(user_id):
+    """ """
+
+    user = User.query.get_or_404(user_id)
+
+    return render_template('new_post_form.html', user=user)
+
+@app.post('/users/<int:user_id>/posts/new')
+def handle_add_post(user_id):
+    """ """
+
+    title = request.form['title']
+    content = request.form['content']
+    created_at = None
+    user_id = user_id
+
+    post = Post(title=title,
+                content=content,
+                created_at=created_at,
+                user_id=user_id
+                )
+
+    db.session.add(post)
+    db.session.commit()
+
+    return redirect(f'/users/{user_id}')
